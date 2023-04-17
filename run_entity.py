@@ -9,7 +9,7 @@ from tqdm import tqdm
 import numpy as np
 
 from shared.data_structures import Dataset
-from shared.const import task_ner_labels, get_labelmap, tasks
+from shared.const import task_ner_labels, get_labelmap, tasks, get_ner_labels
 from entity.utils import convert_dataset_to_samples, batchify, NpEncoder
 from entity.models import EntityModel
 
@@ -187,10 +187,12 @@ if __name__ == '__main__':
 
     logger.info(sys.argv)
     logger.info(args)
+
+    ner_labels = task_ner_labels[args.task] if args.task != "custom" else get_ner_labels(args)
     
-    ner_label2id, ner_id2label = get_labelmap(task_ner_labels[args.task])
+    ner_label2id, ner_id2label = get_labelmap(ner_labels)
     
-    num_ner_labels = len(task_ner_labels[args.task]) + 1
+    num_ner_labels = len(ner_labels) + 1
     model = EntityModel(args, num_ner_labels=num_ner_labels)
 
     dev_data = Dataset(args.dev_data)
