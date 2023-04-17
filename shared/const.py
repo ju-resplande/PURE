@@ -10,6 +10,10 @@ task_rel_labels = {
     'scierc': ['PART-OF', 'USED-FOR', 'FEATURE-OF', 'CONJUNCTION', 'EVALUATE-FOR', 'HYPONYM-OF', 'COMPARE'],
 }
 
+assert task_ner_labels.keys() == task_rel_labels.keys()
+
+tasks = set(task_ner_labels.keys()).add("custom")  
+
 def get_labelmap(label_list):
     label2id = {}
     id2label = {}
